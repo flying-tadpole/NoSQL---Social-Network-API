@@ -12,7 +12,17 @@ router.route('/')
         return res.status(500).json(err)
       }
     }
-  );
+  )
+  .post(
+    async function(req, res) {
+      try {
+        const thought = await Thought.create(req.body)
+        res.json(thought)
+      } catch (err) {
+        res.status(500).json(err)
+      }
+    }
+  )
 
 
 router.route('/:thoughtId')
@@ -21,7 +31,7 @@ router.route('/:thoughtId')
       try {
         const thought = await Thought.findOne({ _id: req.params.thoughtId })
           .select('-__v');
-        if (!student) {
+        if (!thought) {
           return res.status(404).json({ message: 'No thought with that ID' })
         }
         res.json({thought});
@@ -31,7 +41,6 @@ router.route('/:thoughtId')
       }
     }
   )
-  .post()
   .put()
   .delete();
 
