@@ -79,7 +79,7 @@ router.route('/:userId/friends/:friendId')
       try {
         const user = await User.findOneAndUpdate(
           { _id: req.params.userId },
-          { $addToSet: { friends: req.body } },
+          { $addToSet: { friends: req.params.friendId } },
           { runValidators: true, new: true }
         );
   
